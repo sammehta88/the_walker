@@ -29,6 +29,7 @@ function updatePosition() {
   }
   walker.style.left = rightPos + 'px';
   checkEdge();
+  updateControlPanel();
 }
 
 function checkEdge() {
@@ -62,32 +63,46 @@ document.addEventListener('keyup', function(e) {
   }
 });
 
-// var debugButton = document.createElement('button');
-// debugButton.innerHTML = 'debug';
-// document.body.insertBefore(debugButton, walker);
-//
-// var controlPanel = document.createElement('div');
-// controlPanel.style.display = 'none';
-//
-// var panelTitle = document.createElement('h1');
-// var speedDisplay = document.createElement('p');
-// var directionDisplay = document.createElement('p');
-// var positionDisplay = document.createElement('p');
-// panelTitle.innerHTML = 'Control Panel';
-// controlPanel.appendChild(panelTitle);
-// controlPanel.appendChild(speedDisplay);
-// controlPanel.appendChild(directionDisplay);
-// controlPanel.appendChild(positionDisplay);
-// document.body.insertBefore(controlPanel, walker);
-//
-// var displayPanel = false;
-//
-// debugButton.addEventListener('click', function() {
-//   displayPanel = !displayPanel;
-//   togglePanelDisplay();
-// });
-//
-// if (displayPanel) {
-//
-// }
-// controlPanel.style.display = 'block';
+var debugButton = document.createElement('button');
+debugButton.innerHTML = 'debug';
+debugButton.style.display = 'inline';
+document.body.insertBefore(debugButton, walker);
+
+var controlPanel = document.createElement('div');
+controlPanel.style.display = 'none';
+
+var panelTitle = document.createElement('h1');
+var speedDisplay = document.createElement('p');
+var directionDisplay = document.createElement('p');
+var positionDisplay = document.createElement('p');
+panelTitle.innerHTML = 'Control Panel';
+controlPanel.appendChild(panelTitle);
+controlPanel.appendChild(speedDisplay);
+controlPanel.appendChild(directionDisplay);
+controlPanel.appendChild(positionDisplay);
+document.body.insertBefore(controlPanel, walker);
+
+var displayPanel = false;
+
+debugButton.addEventListener('click', function() {
+  displayPanel = !displayPanel;
+  togglePanelDisplay();
+});
+
+function togglePanelDisplay() {
+  if (displayPanel) {
+    controlPanel.style.display = 'inline';
+  } else {
+    controlPanel.style.display = 'none';
+  }
+}
+
+function updateControlPanel() {
+  speedDisplay.innerHTML = speed;
+  if (movingRight) {
+    directionDisplay.innerHTML = 'MOVING RIGHT';
+  } else {
+    directionDisplay.innerHTML = 'MOVING LEFT';
+  }
+  positionDisplay.innerHTML = rightPos;
+}
